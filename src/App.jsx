@@ -1,9 +1,13 @@
+import Layout from "./components/Layout";
+import CountryDetail from "./pages/CountryDetail";
+import Home from "./pages/Home";
+
 function App() {
   return (
     <>
-      <h1 className="bg-slate-200 underline">
-        Hello world!
-      </h1>
+      <Layout />
+      <Home />
+      <CountryDetail />
     </>
   );
 }
