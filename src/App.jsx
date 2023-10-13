@@ -3,6 +3,7 @@ import Layout from "./components/Layout";
 import CountryDetail from "./pages/CountryDetail";
 import Home from "./pages/Home";
 import homeLoader from "./utils/homeLoader";
+import countryLoader from "./utils/countryLoader";
 
 const router = createBrowserRouter([
   {
@@ -10,7 +11,7 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       { index: true, element: <Home />, loader: homeLoader },
-      { path: "country", element: <CountryDetail /> },
+      { path: ":name", element: <CountryDetail />, loader: countryLoader },
     ],
   },
 ]);

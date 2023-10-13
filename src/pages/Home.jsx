@@ -1,9 +1,9 @@
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import CountryCard from "../components/CountryCard";
 
 const Home = () => {
   const data = useLoaderData();
-  console.log(data);
+  // console.log(data);
 
   return (
     <>
@@ -15,7 +15,9 @@ const Home = () => {
       </div>
       <div className="countries-container">
         {data.map((country) => (
-          <CountryCard country={country} key={country.name.common} />
+          <Link to={country.name.common} key={country.name.common}>
+            <CountryCard country={country} />
+          </Link>
         ))}
       </div>
     </>
