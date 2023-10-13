@@ -1,6 +1,10 @@
+import { useLoaderData } from "react-router-dom";
 import CountryCard from "../components/CountryCard";
 
 const Home = () => {
+  const data = useLoaderData();
+  console.log(data);
+
   return (
     <>
       <div className="inputs">
@@ -10,7 +14,9 @@ const Home = () => {
         </select>
       </div>
       <div className="countries-container">
-        <CountryCard />
+        {data.map((country) => (
+          <CountryCard country={country} key={country.name.common} />
+        ))}
       </div>
     </>
   );
