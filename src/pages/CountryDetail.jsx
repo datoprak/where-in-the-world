@@ -1,5 +1,7 @@
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import { countriesWithCode } from "../utils/countryCodes";
+import { Button } from "antd";
+import { ArrowLeftOutlined } from "@ant-design/icons";
 
 const CountryDetail = () => {
   const data = useLoaderData();
@@ -29,7 +31,9 @@ const CountryDetail = () => {
 
   return (
     <>
-      <button>Back</button>
+      <Link to="/">
+        <Button icon={<ArrowLeftOutlined />}>Back</Button>
+      </Link>
       <div className="details">
         <img src={country.flags.png} alt={country.name.common} />
         <div className="name">{country.name.common}</div>
