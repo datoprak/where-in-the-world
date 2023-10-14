@@ -21,13 +21,11 @@ const CountryDetail = () => {
     nativeNames.push(country.name.nativeName[key]);
   }
 
-  country.borders.forEach(border => {
+  country.borders?.forEach(border => {
     borders.push(
       countriesWithCode.find(country => border === country.code).name,
     );
   });
-
-  console.log(nativeNames);
 
   return (
     <>
@@ -68,9 +66,9 @@ const CountryDetail = () => {
         </div>
         <div className="borders">
           Border Countries:
-          {borders.map(border => (
-            <div key={border}>{border}</div>
-          ))}
+          {borders.length > 0
+            ? borders.map(border => <div key={border}>{border}</div>)
+            : " There are no border country"}
         </div>
       </div>
     </>
