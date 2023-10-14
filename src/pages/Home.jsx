@@ -27,11 +27,18 @@ const Home = () => {
 
   const onSearch = (value, _e, info) => {
     if (info?.source === "input") {
-      console.log("first");
-      setDisplayedCountries(prev =>
-        prev.filter(country =>
-          country.name.common.toLowerCase().includes(value.toLowerCase()),
-        ),
+      setDisplayedCountries(
+        filter
+          ? data
+              .filter(country => country.region.toLowerCase() === filter)
+              .filter(filtered =>
+                filtered.name.common
+                  .toLowerCase()
+                  .includes(value.toLowerCase()),
+              )
+          : data.filter(country =>
+              country.name.common.toLowerCase().includes(value.toLowerCase()),
+            ),
       );
     } else
       setDisplayedCountries(
@@ -87,11 +94,13 @@ const Home = () => {
         />
       </div>
       <div className="countries-container">
-        {displayedCountries.map(country => (
-          <Link to={country.name.common} key={country.name.common}>
-            <CountryCard country={country} />
-          </Link>
-        ))}
+        {displayedCountries.length > 0
+          ? displayedCountries.map(country => (
+              <Link to={country.name.common} key={country.name.common}>
+                <CountryCard country={country} />
+              </Link>
+            ))
+          : "There are no country matching your filter."}
       </div>
     </>
   );

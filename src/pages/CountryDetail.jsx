@@ -41,7 +41,7 @@ const CountryDetail = () => {
           <div className="native-name">
             Native Names:
             {nativeNames.map(name => (
-              <span key={name.common}> {name.common}</span>
+              <span key={name.official}>{name.common}</span>
             ))}
           </div>
           <div className="population">Population: {country.population}</div>
@@ -71,7 +71,11 @@ const CountryDetail = () => {
         <div className="borders">
           Border Countries:
           {borders.length > 0
-            ? borders.map(border => <div key={border}>{border}</div>)
+            ? borders.map(border => (
+                <Link to={`/${border}`} key={border}>
+                  <Button>{border}</Button>
+                </Link>
+              ))
             : " There are no border country"}
         </div>
       </div>
