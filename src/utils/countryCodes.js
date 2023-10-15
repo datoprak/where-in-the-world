@@ -118,7 +118,7 @@ export const countriesWithCode = [
   { code: "KIR", name: "Kiribati" },
   { code: "PRK", name: "Korea" },
   { code: "KOR", name: "Korea" },
-  { code: "XKX", name: "Kosovo" },
+  { code: "UNK", name: "Kosovo" },
   { code: "KWT", name: "Kuwait" },
   { code: "KGZ", name: "Kyrgyzstan" },
   { code: "LAO", name: "Lao People's Democratic Republic" },

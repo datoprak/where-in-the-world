@@ -1,21 +1,30 @@
 import { Link, useLoaderData, useSearchParams } from "react-router-dom";
 import CountryCard from "../components/CountryCard";
 import { Input, Select } from "antd";
-import { useEffect, useState } from "react";
 
 const Home = () => {
-  const [displayedCountries, setDisplayedCountries] = useState([]);
   const data = useLoaderData();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const filter = searchParams.get("filter");
+  const search = searchParams.get("search");
 
-  useEffect(() => {
-    const countries = filter
-      ? data.filter(country => country.region.toLowerCase() === filter)
-      : data;
-    setDisplayedCountries(countries);
-  }, [filter, data]);
+  let displayedCountries = data;
+  if (filter && search) {
+    displayedCountries = data
+      .filter(country => country.region.toLowerCase() === filter)
+      .filter(filtered =>
+        filtered.name.common.toLowerCase().includes(search.toLowerCase()),
+      );
+  } else if (filter) {
+    displayedCountries = data.filter(
+      country => country.region.toLowerCase() === filter,
+    );
+  } else if (search) {
+    displayedCountries = data.filter(country =>
+      country.name.common.toLowerCase().includes(search.toLowerCase()),
+    );
+  }
 
   const handleSelect = value => {
     setSearchParams(prev => {
@@ -27,25 +36,16 @@ const Home = () => {
 
   const onSearch = (value, _e, info) => {
     if (info?.source === "input") {
-      setDisplayedCountries(
-        filter
-          ? data
-              .filter(country => country.region.toLowerCase() === filter)
-              .filter(filtered =>
-                filtered.name.common
-                  .toLowerCase()
-                  .includes(value.toLowerCase()),
-              )
-          : data.filter(country =>
-              country.name.common.toLowerCase().includes(value.toLowerCase()),
-            ),
-      );
-    } else
-      setDisplayedCountries(
-        filter
-          ? data.filter(country => country.region.toLowerCase() === filter)
-          : data,
-      );
+      setSearchParams(prev => {
+        prev.set("search", value);
+        return prev;
+      });
+    } else {
+      setSearchParams(prev => {
+        prev.delete("search");
+        return prev;
+      });
+    }
   };
 
   return (
@@ -53,6 +53,7 @@ const Home = () => {
       <div className="inputs">
         <Input.Search
           placeholder="Find country"
+          defaultValue={search || ""}
           allowClear
           onSearch={onSearch}
           style={{
@@ -60,7 +61,7 @@ const Home = () => {
           }}
         />
         <Select
-          defaultValue="world"
+          defaultValue={filter || "world"}
           style={{
             width: 120,
           }}
@@ -96,7 +97,13 @@ const Home = () => {
       <div className="countries-container">
         {displayedCountries.length > 0
           ? displayedCountries.map(country => (
-              <Link to={country.name.common} key={country.name.common}>
+              <Link
+                to={country.name.common}
+                key={country.name.common}
+                state={{
+                  link: `?${searchParams}`,
+                }}
+              >
                 <CountryCard country={country} />
               </Link>
             ))

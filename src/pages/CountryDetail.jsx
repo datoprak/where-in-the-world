@@ -1,15 +1,21 @@
-import { Link, useLoaderData } from "react-router-dom";
+import { Link, useLoaderData, useLocation } from "react-router-dom";
 import { countriesWithCode } from "../utils/countryCodes";
 import { Button } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 
 const CountryDetail = () => {
   const data = useLoaderData();
+  const location = useLocation();
+
   const country = data[0];
   const currencies = [];
   const languages = [];
   const borders = [];
   const nativeNames = [];
+
+  const backLink = location.state?.link || "";
+  const backButtonText =
+    backLink === "?" ? "Back to all countries" : "Back to filtered countries";
 
   for (const key in country.currencies) {
     currencies.push(country.currencies[key].name);
@@ -31,8 +37,8 @@ const CountryDetail = () => {
 
   return (
     <>
-      <Link to="/">
-        <Button icon={<ArrowLeftOutlined />}>Back</Button>
+      <Link to={`..${backLink}`}>
+        <Button icon={<ArrowLeftOutlined />}>{backButtonText}</Button>
       </Link>
       <div className="details">
         <img src={country.flags.png} alt={country.name.common} />
@@ -53,7 +59,7 @@ const CountryDetail = () => {
             ))}
           </div>
           <div className="top-level-domain">
-            {country.tld.map(d => (
+            {country.tld?.map(d => (
               <div key={d}>Top Level Domain: {d}</div>
             ))}
           </div>
