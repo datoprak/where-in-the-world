@@ -41,7 +41,10 @@ const CountryDetail = () => {
         <Button icon={<ArrowLeftOutlined />}>{backButtonText}</Button>
       </Link>
       <div className="details">
-        <img src={country.flags.png} alt={country.name.common} />
+        <img
+          src={country.flags.png}
+          alt={country.flags.alt || `Flag of ${country.name.common}`}
+        />
         <div className="name">{country.name.common}</div>
         <div className="extra-details">
           <div className="native-name">
@@ -54,23 +57,27 @@ const CountryDetail = () => {
           <div className="region">Region: {country.region}</div>
           <div className="sub-region">Sub Region: {country.subregion}</div>
           <div className="capital">
+            Capitals:
             {country.capital.map(cap => (
-              <div key={cap}>Capitals: {cap}</div>
+              <div key={cap}>{cap}</div>
             ))}
           </div>
           <div className="top-level-domain">
+            Top Level Domain:
             {country.tld?.map(d => (
-              <div key={d}>Top Level Domain: {d}</div>
+              <div key={d}>{d}</div>
             ))}
           </div>
           <div className="currencies">
+            Currencies:
             {currencies.map(curr => (
-              <div key={curr}>Currencies: {curr}</div>
+              <div key={curr}>{curr}</div>
             ))}
           </div>
           <div className="languages">
+            Languages:
             {languages.map(lan => (
-              <div key={lan}>Languages: {lan}</div>
+              <div key={lan}>{lan}</div>
             ))}
           </div>
         </div>
