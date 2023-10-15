@@ -31,7 +31,7 @@ const Header = () => {
 
   return (
     <nav>
-      <div className="logo dark:bg-black dark:text-white">
+      <div className="logo">
         <h1>Where in the World?</h1>
       </div>
       <button className="theme-button" onClick={handleTheme}>
