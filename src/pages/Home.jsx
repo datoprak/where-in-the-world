@@ -1,30 +1,15 @@
-import { Link, useLoaderData, useSearchParams } from "react-router-dom";
+import { Await, Link, useLoaderData, useSearchParams } from "react-router-dom";
 import CountryCard from "../components/CountryCard";
 import { Input, Select } from "antd";
+import { Suspense } from "react";
+import Loading from "../components/Loading";
 
 const Home = () => {
-  const data = useLoaderData();
+  const dataPromise = useLoaderData();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const filter = searchParams.get("filter");
   const search = searchParams.get("search");
-
-  let displayedCountries = data;
-  if (filter && search) {
-    displayedCountries = data
-      .filter(country => country.region.toLowerCase() === filter)
-      .filter(filtered =>
-        filtered.name.common.toLowerCase().includes(search.toLowerCase()),
-      );
-  } else if (filter) {
-    displayedCountries = data.filter(
-      country => country.region.toLowerCase() === filter,
-    );
-  } else if (search) {
-    displayedCountries = data.filter(country =>
-      country.name.common.toLowerCase().includes(search.toLowerCase()),
-    );
-  }
 
   const handleSelect = value => {
     setSearchParams(prev => {
@@ -95,19 +80,49 @@ const Home = () => {
         />
       </div>
       <div className="countries-container">
-        {displayedCountries.length > 0
-          ? displayedCountries.map(country => (
-              <Link
-                to={country.name.common}
-                key={country.name.common}
-                state={{
-                  link: `?${searchParams}`,
-                }}
-              >
-                <CountryCard country={country} />
-              </Link>
-            ))
-          : "There are no country matching your filter."}
+        <Suspense fallback={<Loading />}>
+          <Await resolve={dataPromise.data}>
+            {loadedCountries => {
+              let displayedCountries = loadedCountries;
+              if (filter && search) {
+                displayedCountries = loadedCountries
+                  .filter(country => country.region.toLowerCase() === filter)
+                  .filter(filtered =>
+                    filtered.name.common
+                      .toLowerCase()
+                      .includes(search.toLowerCase()),
+                  );
+              } else if (filter) {
+                displayedCountries = loadedCountries.filter(
+                  country => country.region.toLowerCase() === filter,
+                );
+              } else if (search) {
+                displayedCountries = loadedCountries.filter(country =>
+                  country.name.common
+                    .toLowerCase()
+                    .includes(search.toLowerCase()),
+                );
+              }
+              return (
+                <>
+                  {displayedCountries.length > 0
+                    ? displayedCountries.map(country => (
+                        <Link
+                          to={country.name.common}
+                          key={country.name.common}
+                          state={{
+                            link: `?${searchParams}`,
+                          }}
+                        >
+                          <CountryCard country={country} />
+                        </Link>
+                      ))
+                    : "There are no country matching your filter."}
+                </>
+              );
+            }}
+          </Await>
+        </Suspense>
       </div>
     </>
   );
