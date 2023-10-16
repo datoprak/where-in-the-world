@@ -1,7 +1,7 @@
 import { Link, useLoaderData, useLocation } from "react-router-dom";
 import { countriesWithCode } from "../utils/countryCodes";
 import { Button } from "antd";
-import { ArrowLeftOutlined } from "@ant-design/icons";
+import Icon from "../components/Icon";
 
 const CountryDetail = () => {
   const data = useLoaderData();
@@ -38,7 +38,10 @@ const CountryDetail = () => {
   return (
     <>
       <Link to={`..${backLink}`}>
-        <Button icon={<ArrowLeftOutlined />}>{backButtonText}</Button>
+        <Button className="flex items-center gap-2">
+          <Icon name="left-arrow" className="h-4 w-4" />
+          <span>{backButtonText}</span>
+        </Button>
       </Link>
       <div className="details">
         <img

@@ -1,10 +1,5 @@
 import { useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faEarthEurope,
-  faMoon,
-  faSun,
-} from "@fortawesome/free-solid-svg-icons";
+import Icon from "./Icon";
 
 const Header = () => {
   const [theme, setTheme] = useState(localStorage.getItem("theme"));
@@ -40,16 +35,22 @@ const Header = () => {
   };
 
   return (
-    <nav className="flex items-center justify-between p-8">
+    <nav className="mb-1 flex items-center justify-between bg-l-ele p-8 shadow dark:bg-d-ele">
       <div className="flex items-center gap-3">
-        <FontAwesomeIcon icon={faEarthEurope} size="2xl" />
+        <Icon name="earth" className="h-10 w-10" />
         <h1 className="text-4xl font-extrabold">Where in the World?</h1>
       </div>
-      <button onClick={handleTheme}>
+      <button onClick={handleTheme} className="flex items-center gap-2">
         {theme === "dark" ? (
-          <FontAwesomeIcon icon={faSun} size="2xl" />
+          <>
+            <Icon name="sun" className="h-8 w-8" />
+            <span className="text-xl font-semibold">Light Mode</span>
+          </>
         ) : (
-          <FontAwesomeIcon icon={faMoon} size="2xl" />
+          <>
+            <Icon name="moon" className="h-8 w-8" />
+            <span className="text-xl font-semibold">Dark Mode</span>
+          </>
         )}
       </button>
     </nav>
