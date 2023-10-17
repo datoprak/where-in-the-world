@@ -182,7 +182,7 @@ export const countriesWithCode = [
   { code: "PRI", name: "Puerto Rico" },
   { code: "QAT", name: "Qatar" },
   { code: "REU", name: "Reunion" },
-  { code: "ROM", name: "Romania" },
+  { code: "ROU", name: "Romania" },
   { code: "RUS", name: "Russian Federation" },
   { code: "RWA", name: "Rwanda" },
   { code: "BLM", name: "Saint Barthelemy" },

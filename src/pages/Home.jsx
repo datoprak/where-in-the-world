@@ -31,9 +31,9 @@ const Home = () => {
 
   return (
     <>
-      <div className="mb-8 flex justify-between">
+      <div className="mb-8 flex flex-col justify-between gap-4 sm:flex-row">
         <form onSubmit={onSubmit} className="flex">
-          <div className="join w-96 rounded-3xl bg-l-ele dark:bg-d-ele">
+          <div className="join w-full rounded-3xl bg-l-ele dark:bg-d-ele sm:w-96">
             <input
               name="search"
               className="input join-item input-bordered w-full rounded-s-3xl border-e-0 bg-inherit dark:border-base-content dark:bg-inherit"
@@ -53,7 +53,7 @@ const Home = () => {
           name="select"
           value={filter || "world"}
           onChange={handleSelect}
-          className="select select-bordered w-40 bg-l-ele dark:bg-d-ele"
+          className="select select-bordered w-1/2 bg-l-ele dark:bg-d-ele sm:w-40"
         >
           <option value="world">World</option>
           <option value="africa">Africa</option>
@@ -63,7 +63,7 @@ const Home = () => {
           <option value="oceania">Ocenia</option>
         </select>
       </div>
-      <div className="grid w-full grid-cols-auto-fill-100 items-stretch gap-12">
+      <div className="grid w-full grid-cols-auto-fill-100 items-stretch justify-items-center gap-12">
         <Suspense fallback={<Loading />}>
           <Await resolve={dataPromise.data}>
             {loadedCountries => {

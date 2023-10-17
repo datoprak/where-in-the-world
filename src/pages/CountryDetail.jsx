@@ -46,14 +46,14 @@ const CountryDetail = () => {
           </button>
         </Link>
       </div>
-      <div className="details grid grid-cols-2 gap-24">
+      <div className="details sm:grid sm:grid-cols-2 sm:gap-24">
         <img
           src={country.flags.png}
           alt={country.flags.alt || `Flag of ${country.name.common}`}
-          className="justify-self-stretch"
+          className="mb-12 justify-self-stretch"
         />
-        <div className="extra-details grid grid-cols-2 gap-16 self-center">
-          <div className="name col-span-2 text-3xl font-extrabold">
+        <div className="extra-details flex flex-col gap-8 sm:grid sm:grid-cols-2 sm:gap-16 sm:self-center">
+          <div className="name text-3xl font-extrabold sm:col-span-2">
             {country.name.common}
           </div>
           <div className="left-side flex flex-col gap-2">
