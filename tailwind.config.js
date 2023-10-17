@@ -16,6 +16,10 @@ export default {
         "l-text": "#111517",
         "l-inp": "#858585",
       },
+      gridTemplateColumns: {
+        "auto-fill-100": "repeat(auto-fill, minmax(256px, 1fr))",
+        "auto-fit-100": "repeat(auto-fit, minmax(256px, 1fr))",
+      },
     },
   },
   plugins: [require("daisyui")],

@@ -1,4 +1,4 @@
-import { Await, Link, useLoaderData, useSearchParams } from "react-router-dom";
+import { Await, useLoaderData, useSearchParams } from "react-router-dom";
 import CountryCard from "../components/CountryCard";
 import { Suspense, useState } from "react";
 import Loading from "../components/Loading";
@@ -60,7 +60,7 @@ const Home = () => {
           <option value="oceania">Ocenia</option>
         </select>
       </div>
-      <div className="countries-container">
+      <div className="grid-cols-auto-fill-100 grid items-stretch gap-12">
         <Suspense fallback={<Loading />}>
           <Await resolve={dataPromise.data}>
             {loadedCountries => {
@@ -88,15 +88,11 @@ const Home = () => {
                 <>
                   {displayedCountries.length > 0
                     ? displayedCountries.map(country => (
-                        <Link
-                          to={country.name.common}
+                        <CountryCard
+                          country={country}
                           key={country.name.common}
-                          state={{
-                            link: `?${searchParams}`,
-                          }}
-                        >
-                          <CountryCard country={country} />
-                        </Link>
+                          state={`?${searchParams}`}
+                        />
                       ))
                     : "There are no country matching your filter."}
                 </>
