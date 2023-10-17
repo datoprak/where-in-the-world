@@ -48,7 +48,7 @@ const CountryDetail = () => {
       </div>
       <div className="details sm:grid sm:grid-cols-2 sm:gap-24">
         <img
-          src={country.flags.png}
+          src={country.flags.svg}
           alt={country.flags.alt || `Flag of ${country.name.common}`}
           className="mb-12 justify-self-stretch"
         />
