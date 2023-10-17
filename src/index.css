@@ -6,6 +6,6 @@
 
 @layer base {
   body {
-    @apply bg-l-bg text-l-text dark:bg-d-bg  dark:text-d-text font-nunito;
+    @apply bg-l-bg font-nunito text-l-text  dark:bg-d-bg dark:text-d-text;
   }
 }

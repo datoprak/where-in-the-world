@@ -1,83 +1,64 @@
 import { Await, Link, useLoaderData, useSearchParams } from "react-router-dom";
 import CountryCard from "../components/CountryCard";
-import { Input, Select } from "antd";
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import Loading from "../components/Loading";
+import Icon from "../components/Icon";
 
 const Home = () => {
   const dataPromise = useLoaderData();
   const [searchParams, setSearchParams] = useSearchParams();
+  const [input, setInput] = useState("");
 
   const filter = searchParams.get("filter");
   const search = searchParams.get("search");
 
-  const handleSelect = value => {
+  const handleSelect = e => {
     setSearchParams(prev => {
-      if (value === "world") prev.delete("filter");
-      else prev.set("filter", value);
+      if (e.target.value === "world") prev.delete("filter");
+      else prev.set("filter", e.target.value);
       return prev;
     });
   };
 
-  const onSearch = (value, _e, info) => {
-    if (info?.source === "input") {
-      setSearchParams(prev => {
-        prev.set("search", value);
-        return prev;
-      });
-    } else {
-      setSearchParams(prev => {
-        prev.delete("search");
-        return prev;
-      });
-    }
+  const onSubmit = e => {
+    e.preventDefault();
+    setSearchParams(prev => {
+      prev.set("search", input);
+      return prev;
+    });
   };
 
   return (
     <>
-      <div className="inputs">
-        <Input.Search
-          placeholder="Find country"
-          defaultValue={search || ""}
-          allowClear
-          onSearch={onSearch}
-          style={{
-            width: 200,
-          }}
-        />
-        <Select
-          defaultValue={filter || "world"}
-          style={{
-            width: 120,
-          }}
+      <div className="mb-8 flex justify-between">
+        <form onSubmit={onSubmit} className="flex">
+          <div className="join w-96 rounded-3xl bg-l-ele dark:bg-d-ele">
+            <input
+              className="input input-bordered join-item dark:border-base-content w-full rounded-s-3xl border-e-0 bg-inherit dark:bg-inherit"
+              placeholder="Search for a country..."
+              value={input}
+              onChange={e => setInput(e.target.value)}
+            />
+            <button
+              className="btn btn-outline join-item border-base-content dark:border-base-content dark:hover:text-base-content hover:text-base-content rounded-r-full border-s-0 border-opacity-20 bg-inherit transition-none hover:border-opacity-20 hover:bg-l-ele dark:bg-inherit"
+              type="submit"
+            >
+              <Icon name="search" />
+            </button>
+          </div>
+        </form>
+        <select
+          value={filter || "world"}
           onChange={handleSelect}
-          options={[
-            {
-              value: "world",
-              label: "World",
-            },
-            {
-              value: "africa",
-              label: "Africa",
-            },
-            {
-              value: "americas",
-              label: "America",
-            },
-            {
-              value: "asia",
-              label: "Asia",
-            },
-            {
-              value: "europe",
-              label: "Europe",
-            },
-            {
-              value: "oceania",
-              label: "Oceania",
-            },
-          ]}
-        />
+          className="select select-bordered w-40 bg-l-ele dark:bg-d-ele"
+        >
+          <option value="world">World</option>
+          <option value="africa">Africa</option>
+          <option value="americas">America</option>
+          <option value="asia">Asia</option>
+          <option value="europe">Europe</option>
+          <option value="oceania">Ocenia</option>
+        </select>
       </div>
       <div className="countries-container">
         <Suspense fallback={<Loading />}>
