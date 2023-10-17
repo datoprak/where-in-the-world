@@ -14,7 +14,9 @@ const CountryDetail = () => {
 
   const backLink = location.state?.link || "";
   const backButtonText =
-    backLink === "?" ? "Back to all countries" : "Back to filtered countries";
+    backLink === "?" || backLink === ""
+      ? "Back to all countries"
+      : "Back to filtered countries";
 
   for (const key in country.currencies) {
     currencies.push(country.currencies[key].name);
@@ -50,7 +52,7 @@ const CountryDetail = () => {
           alt={country.flags.alt || `Flag of ${country.name.common}`}
           className="justify-self-stretch"
         />
-        <div className="extra-details grid grid-cols-2 self-center gap-16">
+        <div className="extra-details grid grid-cols-2 gap-16 self-center">
           <div className="name col-span-2 text-3xl font-extrabold">
             {country.name.common}
           </div>

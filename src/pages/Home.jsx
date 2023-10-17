@@ -23,7 +23,8 @@ const Home = () => {
   const onSubmit = e => {
     e.preventDefault();
     setSearchParams(prev => {
-      prev.set("search", input);
+      if (input === "") prev.delete("search");
+      else prev.set("search", input);
       return prev;
     });
   };
@@ -34,6 +35,7 @@ const Home = () => {
         <form onSubmit={onSubmit} className="flex">
           <div className="join w-96 rounded-3xl bg-l-ele dark:bg-d-ele">
             <input
+              name="search"
               className="input join-item input-bordered w-full rounded-s-3xl border-e-0 bg-inherit dark:border-base-content dark:bg-inherit"
               placeholder="Search for a country..."
               value={input}
@@ -48,6 +50,7 @@ const Home = () => {
           </div>
         </form>
         <select
+          name="select"
           value={filter || "world"}
           onChange={handleSelect}
           className="select select-bordered w-40 bg-l-ele dark:bg-d-ele"

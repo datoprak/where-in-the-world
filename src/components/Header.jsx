@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Icon from "./Icon";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [theme, setTheme] = useState(localStorage.getItem("theme"));
@@ -36,13 +37,16 @@ const Header = () => {
 
   return (
     <nav className="mb-1 flex items-center justify-between bg-l-ele p-8 shadow dark:bg-d-ele">
-      <div className="flex items-center gap-3">
-        <Icon name="earth" className="h-10 w-10" />
-        <h1 className="text-4xl font-extrabold">Where in the World?</h1>
-      </div>
+      <Link to="/">
+        <div className="flex items-center gap-3">
+          <Icon name="earth" className="h-10 w-10" />
+          <h1 className="text-4xl font-extrabold">Where in the World?</h1>
+        </div>
+      </Link>
       <div className="flex items-center gap-2">
         <label className="swap swap-rotate">
           <input
+            name="theme-switch"
             type="checkbox"
             checked={theme === "dark"}
             onChange={handleTheme}
