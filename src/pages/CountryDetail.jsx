@@ -1,6 +1,5 @@
 import { Link, useLoaderData, useLocation } from "react-router-dom";
 import { countriesWithCode } from "../utils/countryCodes";
-import { Button } from "antd";
 import Icon from "../components/Icon";
 
 const CountryDetail = () => {
@@ -37,62 +36,82 @@ const CountryDetail = () => {
 
   return (
     <>
-      <Link to={`..${backLink}`}>
-        <Button className="flex items-center gap-2">
-          <Icon name="left-arrow" className="h-4 w-4" />
-          <span>{backButtonText}</span>
-        </Button>
-      </Link>
-      <div className="details">
+      <div className="mb-12">
+        <Link to={`..${backLink}`}>
+          <button className="btn border-none bg-l-ele text-l-text shadow-2xl transition-transform hover:scale-105 hover:bg-l-ele dark:bg-d-ele dark:text-d-text">
+            <Icon name="left-arrow" className="h-4 w-4" />
+            <span>{backButtonText}</span>
+          </button>
+        </Link>
+      </div>
+      <div className="details grid grid-cols-2 gap-24">
         <img
           src={country.flags.png}
           alt={country.flags.alt || `Flag of ${country.name.common}`}
+          className="justify-self-stretch"
         />
-        <div className="name">{country.name.common}</div>
-        <div className="extra-details">
-          <div className="native-name">
-            Native Names:
-            {nativeNames.map(name => (
-              <span key={name.official}>{name.common}</span>
-            ))}
+        <div className="extra-details grid grid-cols-2 self-center gap-16">
+          <div className="name col-span-2 text-3xl font-extrabold">
+            {country.name.common}
           </div>
-          <div className="population">Population: {country.population}</div>
-          <div className="region">Region: {country.region}</div>
-          <div className="sub-region">Sub Region: {country.subregion}</div>
-          <div className="capital">
-            Capitals:
-            {country.capital.map(cap => (
-              <div key={cap}>{cap}</div>
-            ))}
+          <div className="left-side flex flex-col gap-2">
+            <div className="native-name">
+              <span className="font-semibold">Native Names: </span>
+              {nativeNames.map((name, i) => (
+                <span key={name.official}>{(i ? ", " : "") + name.common}</span>
+              ))}
+            </div>
+            <div className="population">
+              <span className="font-semibold">Population: </span>
+              {country.population}
+            </div>
+            <div className="region">
+              <span className="font-semibold">Region: </span>
+              {country.region}
+            </div>
+            <div className="sub-region">
+              <span className="font-semibold">Sub Region: </span>
+              {country.subregion}
+            </div>
           </div>
-          <div className="top-level-domain">
-            Top Level Domain:
-            {country.tld?.map(d => (
-              <div key={d}>{d}</div>
-            ))}
+          <div className="right-side flex flex-col gap-2">
+            <div className="capital">
+              <span className="font-semibold">Capitals: </span>
+              {country.capital.map((cap, i) => (
+                <span key={cap}>{(i ? ", " : "") + cap}</span>
+              ))}
+            </div>
+            <div className="top-level-domain">
+              <span className="font-semibold">Top Level Domain: </span>
+              {country.tld?.map((d, i) => (
+                <span key={d}>{(i ? ", " : "") + d}</span>
+              ))}
+            </div>
+            <div className="currencies">
+              <span className="font-semibold">Currencies: </span>
+              {currencies.map((curr, i) => (
+                <span key={curr}>{(i ? ", " : "") + curr}</span>
+              ))}
+            </div>
+            <div className="languages">
+              <span className="font-semibold">Languages: </span>
+              {languages.map((lan, i) => (
+                <span key={lan}>{(i ? ", " : "") + lan}</span>
+              ))}
+            </div>
           </div>
-          <div className="currencies">
-            Currencies:
-            {currencies.map(curr => (
-              <div key={curr}>{curr}</div>
-            ))}
+          <div className="borders col-span-2 flex flex-wrap items-center gap-4">
+            <span className="font-semibold">Border Countries: </span>
+            {borders.length > 0
+              ? borders.map(border => (
+                  <Link to={`/${border}`} key={border}>
+                    <button className="btn border-none bg-l-ele normal-case text-l-text shadow-2xl transition-transform hover:scale-105 hover:bg-l-ele dark:bg-d-ele dark:text-d-text">
+                      {border}
+                    </button>
+                  </Link>
+                ))
+              : " There are no border country"}
           </div>
-          <div className="languages">
-            Languages:
-            {languages.map(lan => (
-              <div key={lan}>{lan}</div>
-            ))}
-          </div>
-        </div>
-        <div className="borders">
-          Border Countries:
-          {borders.length > 0
-            ? borders.map(border => (
-                <Link to={`/${border}`} key={border}>
-                  <Button>{border}</Button>
-                </Link>
-              ))
-            : " There are no border country"}
         </div>
       </div>
     </>

@@ -34,13 +34,13 @@ const Home = () => {
         <form onSubmit={onSubmit} className="flex">
           <div className="join w-96 rounded-3xl bg-l-ele dark:bg-d-ele">
             <input
-              className="input input-bordered join-item dark:border-base-content w-full rounded-s-3xl border-e-0 bg-inherit dark:bg-inherit"
+              className="input join-item input-bordered w-full rounded-s-3xl border-e-0 bg-inherit dark:border-base-content dark:bg-inherit"
               placeholder="Search for a country..."
               value={input}
               onChange={e => setInput(e.target.value)}
             />
             <button
-              className="btn btn-outline join-item border-base-content dark:border-base-content dark:hover:text-base-content hover:text-base-content rounded-r-full border-s-0 border-opacity-20 bg-inherit transition-none hover:border-opacity-20 hover:bg-l-ele dark:bg-inherit"
+              className="btn btn-outline join-item rounded-r-full border-s-0 border-base-content border-opacity-20 bg-inherit transition-none hover:border-opacity-20 hover:bg-l-ele hover:text-base-content dark:border-base-content dark:bg-inherit dark:hover:text-base-content"
               type="submit"
             >
               <Icon name="search" />
@@ -60,7 +60,7 @@ const Home = () => {
           <option value="oceania">Ocenia</option>
         </select>
       </div>
-      <div className="grid-cols-auto-fill-100 grid items-stretch gap-12">
+      <div className="grid w-full grid-cols-auto-fill-100 items-stretch gap-12">
         <Suspense fallback={<Loading />}>
           <Await resolve={dataPromise.data}>
             {loadedCountries => {
